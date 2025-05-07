@@ -19,7 +19,13 @@ const calculatorGroups = [
   },
   {
     group: 'Health',
-    calculators: [], // Placeholder for future calculators
+    calculators: [
+      {
+        name: 'ACFT Body Fat Calculator',
+        description: 'Calculate U.S. Army body fat percentage and pass/fail status (2023.6.12 standard).',
+        href: '/acft-calculator',
+      },
+    ],
   },
   {
     group: 'Engineering',
