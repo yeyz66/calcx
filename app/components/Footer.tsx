@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -6,7 +7,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between text-gray-500 text-sm">
         <div className="mb-2 md:mb-0">&copy; {new Date().getFullYear()} <a href="https://calcx.org" className="hover:underline">calcx.org</a>. All rights reserved.</div>
         <div className="flex gap-4">
-          <a href="#" className="hover:text-black transition">Privacy Policy</a>
+          <Link href="/privacy-policy" className="hover:text-black transition">Privacy Policy</Link>
           <a href="#" className="hover:text-black transition">Terms</a>
         </div>
       </div>

@@ -3,8 +3,8 @@ import Link from 'next/link';
 import SearchCalculatorsInput from './SearchCalculatorsInput';
 
 type HeaderProps = {
-  search: string;
-  setSearch: (val: string) => void;
+  search?: string;
+  setSearch?: (val: string) => void;
 };
 
 export default function Header({ search, setSearch }: HeaderProps) {
@@ -18,9 +18,11 @@ export default function Header({ search, setSearch }: HeaderProps) {
           <Link href="/" className="hover:text-black transition">Home</Link>
           <a href="#calculators" className="hover:text-black transition">Calculators</a>
         </nav>
-        <div className="ml-4 w-48 max-w-xs flex-shrink-0">
-          <SearchCalculatorsInput search={search} setSearch={setSearch} />
-        </div>
+        {search !== undefined && setSearch !== undefined && (
+          <div className="ml-4 w-48 max-w-xs flex-shrink-0">
+            <SearchCalculatorsInput search={search} setSearch={setSearch} />
+          </div>
+        )}
       </div>
     </header>
   );
