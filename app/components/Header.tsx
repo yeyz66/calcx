@@ -17,7 +17,6 @@ export default function Header({ search, setSearch }: HeaderProps) {
         <nav className="hidden md:flex gap-8 text-gray-700 font-medium text-base">
           <Link href="/" className="hover:text-black transition">Home</Link>
           <a href="#calculators" className="hover:text-black transition">Calculators</a>
-          <a href="#about" className="hover:text-black transition">About</a>
         </nav>
         <div className="ml-4 w-48 max-w-xs flex-shrink-0">
           <SearchCalculatorsInput search={search} setSearch={setSearch} />
