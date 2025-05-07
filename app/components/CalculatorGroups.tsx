@@ -15,7 +15,13 @@ const calculatorGroups = [
   },
   {
     group: 'Financial',
-    calculators: [], // Placeholder for future calculators
+    calculators: [
+      {
+        name: 'Roth IRA Calculator',
+        description: 'Estimate your Roth IRA savings and compare with a regular taxable account.',
+        href: '/roth-ira-calculator',
+      },
+    ], // Placeholder for future calculators
   },
   {
     group: 'Health',
