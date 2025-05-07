@@ -34,3 +34,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 新增页面：沥青吨数计算器（asphalt_calculator）
+
+路径：`/asphalt_calculator`
+
+该页面用于计算沥青铺面所需的总吨数。用户可输入长、宽、厚度和压实沥青单位重量，支持常用单位（米、英寸、吨、千克），自动换算并输出总吨数。页面专为"沥青计算器"等 SEO 关键词优化。

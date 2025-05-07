@@ -21,6 +21,16 @@ const calculatorGroups = [
     group: 'Health',
     calculators: [], // Placeholder for future calculators
   },
+  {
+    group: 'Engineering',
+    calculators: [
+      {
+        name: 'Asphalt Mass Calculator',
+        description: 'Calculate the total mass of asphalt required for paving, supporting multiple unit conversions.',
+        href: '/asphalt_calculator',
+      },
+    ],
+  },
 ];
 
 export default function CalculatorGroups({ search }: { search: string }) {
