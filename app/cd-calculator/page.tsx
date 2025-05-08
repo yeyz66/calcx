@@ -74,7 +74,7 @@ export default function CDCalculator() {
   const [rate, setRate] = useState(0.04);
   const [years, setYears] = useState(5);
   const [compounding, setCompounding] = useState(1);
-  const [taxRate, setTaxRate] = useState(0.25);
+  const [taxRate, setTaxRate] = useState(0);
   const [result, setResult] = useState<CDResult | null>(null);
   const [showResult, setShowResult] = useState(false);
 
