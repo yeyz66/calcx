@@ -27,7 +27,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <SpeedInsights/>
         <link rel="icon" href="/favicon.png" type="image/x-icon" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RQ925XPCYN"
@@ -46,6 +45,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <SpeedInsights/>
       </body>
     </html>
   );
