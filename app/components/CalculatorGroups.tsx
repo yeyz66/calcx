@@ -43,6 +43,16 @@ const calculatorGroups = [
       },
     ],
   },
+  {
+    group: 'Weather',
+    calculators: [
+      {
+        name: 'Dew Point Calculator',
+        description: 'Estimate the dew point temperature based on air temperature and relative humidity.',
+        href: '/dew-point-calculator',
+      },
+    ],
+  },
 ];
 
 export default function CalculatorGroups({ search }: { search: string }) {
