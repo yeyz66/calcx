@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <SpeedInsights/>
         <link rel="icon" href="/favicon.png" type="image/x-icon" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-RQ925XPCYN"
