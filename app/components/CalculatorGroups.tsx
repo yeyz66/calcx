@@ -21,6 +21,11 @@ const calculatorGroups = [
         description: 'Estimate your Roth IRA savings and compare with a regular taxable account.',
         href: '/roth-ira-calculator',
       },
+      {
+        name: 'CD Calculator',
+        description: 'Calculate the accumulated interest and final balance of a Certificate of Deposit (CD), including tax impact.',
+        href: '/cd-calculator',
+      },
     ], // Placeholder for future calculators
   },
   {
