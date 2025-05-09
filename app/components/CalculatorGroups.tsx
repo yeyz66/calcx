@@ -58,6 +58,16 @@ const calculatorGroups = [
       },
     ],
   },
+  {
+    group: 'General',
+    calculators: [
+      {
+        name: 'Rounding Calculator',
+        description: 'Round any number to your chosen precision and rounding mode instantly.',
+        href: '/rounding-calculator',
+      },
+    ],
+  },
 ];
 
 export default function CalculatorGroups({ search }: { search: string }) {
