@@ -66,6 +66,11 @@ const calculatorGroups = [
         description: 'Round any number to your chosen precision and rounding mode instantly.',
         href: '/rounding-calculator',
       },
+      {
+        name: 'Time Card Calculator',
+        description: 'Calculate work hours, overtime, and manage time cards efficiently.',
+        href: '/time-card-calculator',
+      },
     ],
   },
 ];
