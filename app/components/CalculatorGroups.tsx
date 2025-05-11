@@ -17,6 +17,11 @@ const calculatorGroups = [
     group: 'Financial',
     calculators: [
       {
+        name: 'Payment Calculator',
+        description: 'Calculate loan payments, amortization schedules, and determine payoff periods for various loans.',
+        href: '/payment-calculator',
+      },
+      {
         name: 'Roth IRA Calculator',
         description: 'Estimate your Roth IRA savings and compare with a regular taxable account.',
         href: '/roth-ira-calculator',
