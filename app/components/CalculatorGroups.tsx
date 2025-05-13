@@ -76,6 +76,11 @@ const calculatorGroups = [
         description: 'Calculate work hours, overtime, and manage time cards efficiently.',
         href: '/time-card-calculator',
       },
+      {
+        name: 'Chronological Age Calculator',
+        description: 'Calculate the time difference between two dates (e.g., age). Displays years, months, days, and total duration.',
+        href: '/chronological-age-calculator',
+      },
     ],
   },
 ];
