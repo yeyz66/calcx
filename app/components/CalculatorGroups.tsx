@@ -41,6 +41,16 @@ const calculatorGroups = [
         description: 'Calculate U.S. Army body fat percentage and pass/fail status (2023.6.12 standard).',
         href: '/acft-calculator',
       },
+      {
+        name: 'IVF Due Date Calculator',
+        description: 'Estimate your pregnancy due date based on IVF embryo transfer details for 3-day or 5-day transfers.',
+        href: '/ivf-due-date-calculator',
+      },
+      {
+        name: 'Period Calculator',
+        description: 'Predict your future menstrual cycles and ovulation periods.',
+        href: '/period-calculator',
+      },
     ],
   },
   {
