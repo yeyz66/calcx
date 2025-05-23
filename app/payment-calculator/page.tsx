@@ -274,30 +274,25 @@ export default function PaymentCalculator() {
         label: 'Annual Interest',
         data: fixedPaymentResult.amortizationSchedule
           .filter((_, index) => (index + 1) % 12 === 0 || index === fixedPaymentResult.amortizationSchedule.length - 1)
-          .map((row, index, filteredArray) => {
-            if (index === filteredArray.length - 1 && row.month % 12 !== 0) {
-              const monthsInLastYear = row.month % 12 || 12;
-              const startIndex = fixedPaymentResult.amortizationSchedule.length - monthsInLastYear;
-              return fixedPaymentResult.amortizationSchedule
-                .slice(startIndex)
-                .reduce((sum, r) => sum + r.interest, 0);
-            } else {
-              const currentYearDataPoints = fixedPaymentResult.amortizationSchedule.filter((_, i) => i % 12 === 0 || i === fixedPaymentResult.amortizationSchedule.length -1);
-              const actualMonthForThisPoint = currentYearDataPoints[index].month;
-              const yearNumber = Math.floor(actualMonthForThisPoint / 12);
-
-              const yearStartIndex = yearNumber * 12;
-              const yearEndIndex = Math.min(yearStartIndex + 12, fixedPaymentResult.amortizationSchedule.length);
-              return fixedPaymentResult.amortizationSchedule
-                .slice(yearStartIndex, yearEndIndex)
-                .reduce((sum, r) => sum + r.interest, 0);
-            }
+          .map((_, yearIndex, filteredArray) => {
+            const isLastElement = yearIndex === filteredArray.length - 1;
+            const lastRowMonth = fixedPaymentResult.amortizationSchedule[fixedPaymentResult.amortizationSchedule.length - 1].month;
+            const monthsInLastYear = lastRowMonth % 12 === 0 ? 12 : lastRowMonth % 12;
+            const startIndex = fixedPaymentResult.amortizationSchedule.length - monthsInLastYear;
+            return fixedPaymentResult.amortizationSchedule
+              .slice(isLastElement ? startIndex : yearIndex * 12, isLastElement ? fixedPaymentResult.amortizationSchedule.length : (yearIndex + 1) * 12)
+              .reduce((sum, row) => sum + row.interest, 0);
           }),
         borderColor: '#f87171',
         backgroundColor: 'rgba(248, 113, 113, 0.1)',
         yAxisID: 'y1',
       }
     ],
+  };
+  
+  // Handle print function
+  const handlePrint = () => {
+    window.print();
   };
   
   // Chart options
@@ -532,6 +527,15 @@ export default function PaymentCalculator() {
                 </div>
                 
                 <div className="bg-white rounded-lg shadow p-4 overflow-x-auto">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-semibold">Amortization Schedule</h3>
+                    <button
+                      onClick={handlePrint}
+                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                    >
+                      Print Results
+                    </button>
+                  </div>
                   <AmortizationTable schedule={fixedTermResult.amortizationSchedule} />
                 </div>
               </>
@@ -627,6 +631,15 @@ export default function PaymentCalculator() {
                 </div>
                 
                 <div className="bg-white rounded-lg shadow p-4 overflow-x-auto">
+                  <div className="flex justify-between items-center mb-4">
+                    <h3 className="font-semibold">Amortization Schedule</h3>
+                    <button
+                      onClick={handlePrint}
+                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                    >
+                      Print Results
+                    </button>
+                  </div>
                   <AmortizationTable schedule={fixedPaymentResult.amortizationSchedule} />
                 </div>
               </>

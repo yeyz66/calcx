@@ -22,6 +22,11 @@ const calculatorGroups = [
         href: '/payment-calculator',
       },
       {
+        name: 'Land Loan Calculator',
+        description: 'Calculate payments and amortization for agricultural land, farm, and rural property loans.',
+        href: '/land-loan-calculator',
+      },
+      {
         name: 'Roth IRA Calculator',
         description: 'Estimate your Roth IRA savings and compare with a regular taxable account.',
         href: '/roth-ira-calculator',
