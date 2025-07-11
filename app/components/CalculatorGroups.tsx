@@ -36,6 +36,11 @@ const calculatorGroups = [
         description: 'Calculate the accumulated interest and final balance of a Certificate of Deposit (CD), including tax impact.',
         href: '/cd-calculator',
       },
+      {
+        name: 'Coast FIRE Calculator',
+        description: 'Calculate when you have enough invested to coast to retirement without additional contributions.',
+        href: '/coast-fire-calc',
+      },
     ], // Placeholder for future calculators
   },
   {
