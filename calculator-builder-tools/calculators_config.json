@@ -1,0 +1,20 @@
+{
+  "delay_between_builds": 30,
+  "calculators": [
+    {
+      "path": "/mortgage-calculator",
+      "site": "https://www.calculator.net/mortgage-calculator.html",
+      "description": "房贷计算器"
+    },
+    {
+      "path": "/savings-calculator",
+      "site": "https://www.calculator.net/savings-calculator.html",
+      "description": "储蓄计算器"
+    },
+    {
+      "path": "/investment-calculator",
+      "site": "https://www.calculator.net/investment-calculator.html",
+      "description": "投资计算器"
+    }
+  ]
+}

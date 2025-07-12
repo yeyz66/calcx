@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { evaluate, format, pi, e as mathE, sin, cos, tan, asin, acos, atan, log, sqrt, pow, random, factorial } from 'mathjs';
 
 const buttons = [
@@ -19,6 +19,8 @@ export default function ScientificCalculator() {
   const [angleMode, setAngleMode] = useState<'DEG' | 'RAD'>('DEG');
   const [memory, setMemory] = useState(0);
   const [lastAnswer, setLastAnswer] = useState('');
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const calculatorRef = useRef<HTMLDivElement>(null);
 
   // Load history from localStorage on mount
   useEffect(() => {
@@ -32,6 +34,41 @@ export default function ScientificCalculator() {
   useEffect(() => {
     localStorage.setItem('sci-calc-history', JSON.stringify(history));
   }, [history]);
+
+  // Handle fullscreen change events
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && document.fullscreenElement) {
+        document.exitFullscreen();
+      }
+    };
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange);
+    document.addEventListener('keydown', handleKeyDown);
+    
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  const toggleFullscreen = async () => {
+    if (!calculatorRef.current) return;
+
+    try {
+      if (!document.fullscreenElement) {
+        await calculatorRef.current.requestFullscreen();
+      } else {
+        await document.exitFullscreen();
+      }
+    } catch (error) {
+      console.error('Fullscreen toggle failed:', error);
+    }
+  };
 
   function toRad(val: number) {
     return angleMode === 'DEG' ? (val * Math.PI) / 180 : val;
@@ -148,55 +185,128 @@ export default function ScientificCalculator() {
   };
 
   return (
-    <section className="w-full max-w-2xl mx-auto p-2">
-      <div className="flex flex-col md:flex-row gap-2">
-        {/* 历史记录栏 */}
-        <div className="md:w-1/3 w-full bg-white border border-gray-200 rounded-lg shadow p-2 mb-2 md:mb-0 md:mr-2 h-fit">
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-semibold text-gray-700">History</span>
-            <button
-              onClick={handleClearHistory}
-              className="text-xs text-red-500 hover:underline focus:outline-none"
-              disabled={history.length === 0}
-            >
-              Clear
-            </button>
+    <section 
+      ref={calculatorRef}
+      className={`w-full mx-auto transition-all duration-300 relative ${
+        isFullscreen 
+          ? 'fixed inset-0 z-50 bg-gray-900 p-4 flex items-center justify-center max-w-none' 
+          : 'max-w-2xl p-2'
+      }`}
+    >
+      {/* Fullscreen Toggle Button - Always visible in top right */}
+      <button
+        onClick={toggleFullscreen}
+        className={`absolute z-10 transition-all duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl ${
+          isFullscreen 
+            ? 'top-4 right-4 bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-lg text-base border-2 border-red-400' 
+            : 'top-4 right-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-2 rounded-full text-sm font-semibold hover:scale-105 transform border-2 border-blue-400'
+        }`}
+        title={isFullscreen ? 'Exit Fullscreen (ESC)' : 'Enter Fullscreen Mode'}
+      >
+        {isFullscreen ? (
+          <>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            <span className="hidden sm:inline">Exit</span>
+          </>
+        ) : (
+          <>
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+            </svg>
+            <span className="hidden sm:inline font-bold">Fullscreen</span>
+          </>
+        )}
+      </button>
+
+      <div className={`flex flex-col gap-2 w-full ${
+        isFullscreen 
+          ? 'max-w-6xl h-full pt-16' 
+          : 'md:flex-row pt-16'
+      }`}>
+        {/* Calculator Title */}
+        {isFullscreen && (
+          <div className="text-center mb-4">
+            <h3 className="text-2xl font-bold text-white">
+              Scientific Calculator
+            </h3>
           </div>
-          {history.length === 0 ? (
-            <div className="text-gray-400 italic text-sm">No history yet.</div>
-          ) : (
-            <ul className="max-h-56 overflow-y-auto divide-y divide-gray-100">
-              {history.map((item, i) => (
-                <li key={i} className="flex justify-between items-center py-1 text-sm font-mono">
-                  <span className="text-gray-600">{item.expression}</span>
-                  <span className="text-gray-900 font-bold">= {item.result}</span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-        {/* 计算器主体 */}
-        <div className="md:w-2/3 w-full">
-          <div className="bg-white border border-gray-200 rounded-lg shadow p-2 mb-2">
-            <div className="flex flex-col items-end px-2 py-1">
-              <div className="text-base font-mono text-gray-500 h-6 overflow-x-auto w-full text-right">
-                {expression || '0'}
+        )}
+
+        <div className={`flex gap-4 ${isFullscreen ? 'h-full' : 'flex-col md:flex-row'}`}>
+          {/* 历史记录栏 */}
+          <div className={`bg-white border border-gray-200 rounded-lg shadow p-4 h-fit ${
+            isFullscreen 
+              ? 'w-1/3 max-h-full' 
+              : 'md:w-1/3 w-full mb-2 md:mb-0'
+          }`}>
+            <div className="flex items-center justify-between mb-4">
+              <span className={`font-semibold text-gray-700 ${isFullscreen ? 'text-lg' : ''}`}>History</span>
+              <button
+                onClick={handleClearHistory}
+                className={`text-red-500 hover:underline focus:outline-none ${
+                  isFullscreen ? 'text-base' : 'text-xs'
+                }`}
+                disabled={history.length === 0}
+              >
+                Clear
+              </button>
+            </div>
+            {history.length === 0 ? (
+              <div className={`text-gray-400 italic ${isFullscreen ? 'text-base' : 'text-sm'}`}>
+                No history yet.
               </div>
-              <div className="text-2xl font-mono text-gray-900 h-8 overflow-x-auto w-full text-right">
-                {result !== '' ? result : ''}
+            ) : (
+              <ul className={`overflow-y-auto divide-y divide-gray-100 ${
+                isFullscreen ? 'max-h-full text-base' : 'max-h-56 text-sm'
+              }`}>
+                {history.map((item, i) => (
+                  <li key={i} className="flex justify-between items-center py-2 font-mono">
+                    <span className="text-gray-600 break-all mr-2">{item.expression}</span>
+                    <span className="text-gray-900 font-bold whitespace-nowrap">= {item.result}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* 计算器主体 */}
+          <div className={`${isFullscreen ? 'w-2/3 flex flex-col' : 'md:w-2/3 w-full'}`}>
+            {/* Display */}
+            <div className={`bg-white border border-gray-200 rounded-lg shadow mb-4 ${
+              isFullscreen ? 'p-6' : 'p-2'
+            }`}>
+              <div className="flex flex-col items-end px-2 py-1">
+                <div className={`font-mono text-gray-500 overflow-x-auto w-full text-right ${
+                  isFullscreen ? 'text-2xl h-10' : 'text-base h-6'
+                }`}>
+                  {expression || '0'}
+                </div>
+                <div className={`font-mono text-gray-900 overflow-x-auto w-full text-right font-bold ${
+                  isFullscreen ? 'text-4xl h-12' : 'text-2xl h-8'
+                }`}>
+                  {result !== '' ? result : ''}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="grid grid-cols-10 gap-1">
-            {buttons.flat().map((btn, idx) => (
-              <button
-                key={idx}
-                className="py-1 px-1 text-xs sm:text-sm rounded border border-gray-200 bg-gray-50 hover:bg-gray-200 active:bg-gray-300 transition focus:outline-none"
-                onClick={() => handleClick(btn)}
-              >
-                {btn}
-              </button>
-            ))}
+
+            {/* Buttons */}
+            <div className={`grid grid-cols-10 gap-2 ${isFullscreen ? 'flex-1' : ''}`}>
+              {buttons.flat().map((btn, idx) => (
+                <button
+                  key={idx}
+                  className={`rounded border border-gray-200 bg-gray-50 hover:bg-gray-200 active:bg-gray-300 transition focus:outline-none font-semibold ${
+                    isFullscreen 
+                      ? 'py-4 px-2 text-lg md:text-xl hover:shadow-lg transform hover:scale-105' 
+                      : 'py-1 px-1 text-xs sm:text-sm'
+                  }`}
+                  onClick={() => handleClick(btn)}
+                >
+                  {btn}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>

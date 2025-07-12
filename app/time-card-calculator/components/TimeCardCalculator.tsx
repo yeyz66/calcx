@@ -360,7 +360,7 @@ const TimeCardCalculator: React.FC = () => {
   };
 
   const processedEntriesForDisplay = useMemo<TimeEntry[]>(() => {
-    let entriesToDisplay: TimeEntry[] = [...timeEntries].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime() || a.startTime.localeCompare(b.startTime));
+    const entriesToDisplay: TimeEntry[] = [...timeEntries].sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime() || a.startTime.localeCompare(b.startTime));
 
     if (showBlankDays) {
         if (entriesToDisplay.length === 0) {
@@ -377,7 +377,7 @@ const TimeCardCalculator: React.FC = () => {
         const allDaysInDisplayedRange = eachDayOfInterval(weekStart, weekEnd);
         
         const filledEntries: TimeEntry[] = [];
-        let currentEntryIndex = 0;
+        const currentEntryIndex = 0;
 
         allDaysInDisplayedRange.forEach(dayStr => {
             const entriesForThisDay = entriesToDisplay.filter(e => e.date === dayStr && !e.isBlank);

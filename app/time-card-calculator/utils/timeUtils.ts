@@ -122,7 +122,7 @@ export const getWeekEndDate = (dateString: string, firstDayOfWeek: number = 1): 
  */
 export const eachDayOfInterval = (startDate: Date, endDate: Date): string[] => {
     const dates: string[] = [];
-    let currentDate = new Date(startDate);
+    const currentDate = new Date(startDate);
     currentDate.setUTCHours(0,0,0,0); // Normalize time part
     const finalDate = new Date(endDate);
     finalDate.setUTCHours(0,0,0,0); // Normalize time part

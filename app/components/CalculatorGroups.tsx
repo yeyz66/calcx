@@ -111,6 +111,11 @@ const calculatorGroups = [
         description: 'Convert years between different calendar systems and historical eras (CE, BCE, Hijri, Hebrew, Buddhist).',
         href: '/era-calculator',
       },
+      {
+        name: 'AP Language Score Calculator',
+        description: 'Calculate your estimated AP English Language exam score based on multiple-choice and essay performance.',
+        href: '/ap-lang-calculator',
+      },
     ],
   },
 ];
@@ -124,30 +129,89 @@ export default function CalculatorGroups({ search }: { search: string }) {
     ),
   })).filter(group => group.calculators.length > 0 || search === '');
 
+  const groupIcons = {
+    'Scientific': '🧮',
+    'Financial': '💰',
+    'Health': '⚡',
+    'Engineering': '⚙️',
+    'Weather': '🌤️',
+    'General': '📊'
+  };
+
+  const groupColors = {
+    'Scientific': 'from-blue-500 to-cyan-500',
+    'Financial': 'from-green-500 to-emerald-500',
+    'Health': 'from-red-500 to-pink-500',
+    'Engineering': 'from-orange-500 to-amber-500',
+    'Weather': 'from-sky-500 to-blue-500',
+    'General': 'from-purple-500 to-indigo-500'
+  };
+
   return (
     <section id="calculators">
-      <div className="space-y-10">
+      <div className="space-y-12">
         {filteredGroups.map(group => (
-          <div key={group.group}>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">{group.group} Calculators</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div key={group.group} className="group-section">
+            <div className="flex items-center gap-3 mb-8">
+              <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${groupColors[group.group as keyof typeof groupColors]} flex items-center justify-center text-white text-2xl shadow-lg`}>
+                {groupIcons[group.group as keyof typeof groupIcons]}
+              </div>
+              <div>
+                <h2 className="text-3xl font-bold text-gray-900">{group.group}</h2>
+                <p className="text-gray-600">Specialized calculators for {group.group.toLowerCase()}</p>
+              </div>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {group.calculators.length === 0 ? (
-                <div className="text-gray-400 italic">Coming soon...</div>
+                <div className="col-span-full text-center py-12">
+                  <div className="text-6xl mb-4">🚧</div>
+                  <div className="text-xl font-semibold text-gray-500 mb-2">Coming Soon</div>
+                  <div className="text-gray-400">More calculators in development</div>
+                </div>
               ) : (
                 group.calculators.map(calc => (
                   <a
                     key={calc.name}
                     href={calc.href}
-                    className="block bg-white border border-gray-200 rounded-xl p-6 shadow hover:shadow-lg transition group"
+                    className="group block bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-gray-300 transition-all duration-300 transform hover:-translate-y-1"
                   >
-                    <div className="text-xl font-bold text-gray-900 mb-2 group-hover:text-black transition">{calc.name}</div>
-                    <div className="text-gray-600">{calc.description}</div>
+                    <div className="flex items-start justify-between mb-3">
+                      <div className={`w-10 h-10 rounded-lg bg-gradient-to-r ${groupColors[group.group as keyof typeof groupColors]} flex items-center justify-center text-white text-lg shadow-md group-hover:scale-110 transition-transform`}>
+                        {groupIcons[group.group as keyof typeof groupIcons]}
+                      </div>
+                      <svg className="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-black transition-colors leading-tight">
+                      {calc.name}
+                    </h3>
+                    <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                      {calc.description}
+                    </p>
+                    <div className="mt-4 flex items-center text-sm font-medium text-blue-600 group-hover:text-blue-700">
+                      Open Calculator
+                      <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                      </svg>
+                    </div>
                   </a>
                 ))
               )}
             </div>
           </div>
         ))}
+        
+        {filteredGroups.length === 0 && search && (
+          <div className="text-center py-16">
+            <div className="text-6xl mb-6">🔍</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">No calculators found</h3>
+            <p className="text-gray-600 max-w-md mx-auto">
+              Try searching for "payment", "body fat", "scientific", or browse all categories above.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );
