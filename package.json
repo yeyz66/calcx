@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@playwright/test": "^1.54.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -33,6 +34,7 @@
     "@types/uuid": "^9.0.8",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "playwright": "^1.54.1",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

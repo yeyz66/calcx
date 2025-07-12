@@ -71,6 +71,11 @@ const calculatorGroups = [
         description: 'Calculate the total mass of asphalt required for paving, supporting multiple unit conversions.',
         href: '/asphalt_calculator',
       },
+      {
+        name: 'Conduit Fill Calculator',
+        description: 'Calculate conduit fill percentage per NEC® guidelines for safe electrical installations.',
+        href: '/conduit-fill-calculator',
+      },
     ],
   },
   {
