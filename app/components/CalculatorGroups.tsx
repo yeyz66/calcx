@@ -106,6 +106,11 @@ const calculatorGroups = [
         description: 'Calculate the time difference between two dates (e.g., age). Displays years, months, days, and total duration.',
         href: '/chronological-age-calculator',
       },
+      {
+        name: 'Era Calculator',
+        description: 'Convert years between different calendar systems and historical eras (CE, BCE, Hijri, Hebrew, Buddhist).',
+        href: '/era-calculator',
+      },
     ],
   },
 ];
