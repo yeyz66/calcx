@@ -37,7 +37,7 @@ export default function APLangCalculator() {
   const [synthesisScore, setSynthesisScore] = useState<number>(0);
   const [rhetoricalScore, setRhetoricalScore] = useState<number>(0);
   const [argumentScore, setArgumentScore] = useState<number>(0);
-  const [selectedYear, setSelectedYear] = useState<keyof typeof AP_SCORE_RANGES>('2025');
+  const [selectedYear, setSelectedYear] = useState<keyof typeof AP_SCORE_RANGES>(2025);
   const [result, setResult] = useState<ScoreResult | null>(null);
 
   const calculateScore = () => {
@@ -106,12 +106,12 @@ export default function APLangCalculator() {
                 <select
                   id="year"
                   value={selectedYear}
-                  onChange={(e) => setSelectedYear(e.target.value as keyof typeof AP_SCORE_RANGES)}
+                  onChange={(e) => setSelectedYear(Number(e.target.value) as keyof typeof AP_SCORE_RANGES)}
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
-                  <option value="2025">2025</option>
-                  <option value="2020">2020</option>
-                  <option value="2007">2007</option>
+                  <option value={2025}>2025</option>
+                  <option value={2020}>2020</option>
+                  <option value={2007}>2007</option>
                 </select>
               </div>
 

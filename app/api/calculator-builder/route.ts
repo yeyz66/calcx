@@ -6,7 +6,15 @@ import path from 'path';
 interface Calculator {
   path: string;
   site: string;
-  description?: string;
+  description: string;
+}
+
+interface BuildResult {
+  success: boolean;
+  calculator: string;
+  output?: string;
+  error?: string;
+  message: string;
 }
 
 interface BuildRequest {
@@ -49,7 +57,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function buildSingleCalculator(calculator: Calculator) {
+async function buildSingleCalculator(calculator: Calculator): Promise<BuildResult> {
   return new Promise((resolve, reject) => {
     const projectRoot = process.cwd();
     
@@ -131,7 +139,7 @@ async function buildSingleCalculator(calculator: Calculator) {
 }
 
 async function buildBatchCalculators(calculators: Calculator[], delayBetweenBuilds: number) {
-  const results = [];
+  const results: BuildResult[] = [];
   
   for (let i = 0; i < calculators.length; i++) {
     const calculator = calculators[i];
@@ -142,7 +150,7 @@ async function buildBatchCalculators(calculators: Calculator[], delayBetweenBuil
       results.push(result);
       console.log(`计算器 ${calculator.path} 构建成功`);
     } catch (error) {
-      results.push(error);
+      results.push(error as BuildResult);
       console.error(`计算器 ${calculator.path} 构建失败:`, error);
     }
     

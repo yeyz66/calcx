@@ -23,7 +23,7 @@ interface BuildJob {
 
 interface BatchConfig {
   delay_between_builds: number;
-  calculators: Calculator[];
+  calculators: Omit<Calculator, 'id'>[];
 }
 
 export default function CalculatorBuilderPage() {
